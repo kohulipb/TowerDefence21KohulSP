@@ -9,6 +9,7 @@ public class Projectile : MonoBehaviour
 
     private Rigidbody rb;
     private Enemy targetedEnemy;
+    [SerializeField] float damage = 5f;
 
     private void Awake()
     {
@@ -35,8 +36,8 @@ public class Projectile : MonoBehaviour
     {
         if (other.gameObject == targetedEnemy.gameObject)
         {
-            Destroy(targetedEnemy.gameObject);
+            targetedEnemy.InflictDamage(damage);
             Destroy(this.gameObject);
         }
-    }
+    }   
 }
