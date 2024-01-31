@@ -9,7 +9,7 @@ public class Tower : MonoBehaviour
     [SerializeField] Projectile projectile;
     [SerializeField] Transform firingPoint;
 
-
+    private bool towerIsActive;
     //Timers
     [SerializeField] float firingTimer;
     [SerializeField] float firingDelay = 1.0f;
@@ -22,32 +22,40 @@ public class Tower : MonoBehaviour
     [SerializeField] Collider[] colliders;
     [SerializeField] List<Enemy> enemiesInRange;
     [SerializeField] Enemy targetedEnemy;
-         
+
+
+    private void Awake()
+    {
+        //Initialize setup
+        towerIsActive = false;
+    }
     private void Update()
     {
-        //SCANNING PART
-
-        scanningTimer += Time.deltaTime;
-        if (scanningTimer >= scanningDelay)
+        if (towerIsActive)
         {
-            scanningTimer = 0f;
-            ScanForEnemies();
-        }
+            //SCANNING PART
 
-        //FIRING PART
+            scanningTimer += Time.deltaTime;
+            if (scanningTimer >= scanningDelay)
+            {
+                scanningTimer = 0f;
+                ScanForEnemies();
+            }
 
-        if (targetedEnemy)
-        {
-            firingTimer += Time.deltaTime;
-        }
-                
-        
-        if(firingTimer >= firingDelay)
-        {
-            firingTimer = 0f;
-            OverlapFire();
-        }
+            //FIRING PART
 
+            if (targetedEnemy)
+            {
+                firingTimer += Time.deltaTime;
+            }
+
+
+            if (firingTimer >= firingDelay)
+            {
+                firingTimer = 0f;
+                OverlapFire();
+            }
+        }
         
     }
 
@@ -91,6 +99,11 @@ public class Tower : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, range);
+    }
+
+    public void activateTower() 
+    {
+        towerIsActive = true;
     }
 
 
