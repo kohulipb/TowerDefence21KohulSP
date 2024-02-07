@@ -11,6 +11,7 @@ public class Projectile : MonoBehaviour
     private Enemy targetedEnemy;
     [SerializeField] float damage = 5f;
     private Vector3 lastDirection;
+    [SerializeField] private ParticleSystem ParticleFX;
 
     private void Awake()
     {
@@ -53,6 +54,9 @@ public class Projectile : MonoBehaviour
             targetedEnemy.InflictDamage(damage);
             Destroy(this.gameObject);
         }
+
+        //Spawn fx
+        Instantiate(ParticleFX, transform.position, Quaternion.identity);
     }
 }
 
